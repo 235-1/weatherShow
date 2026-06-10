@@ -1,0 +1,16 @@
+/* 移除所有默认外边距 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 确保根节点撑满全屏，且背景为黑色 */
+html, 
+body, 
+#app {
+  width: 100%;
+  height: 100%;
+  background-color: #060d1a; /* 你的气象平台背景色 */
+  overflow: hidden;         /* 防止超出屏幕的滚动条 */
+}
