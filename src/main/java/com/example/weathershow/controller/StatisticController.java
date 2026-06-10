@@ -33,7 +33,7 @@ public class StatisticController {
     }
 
     /*
-    * 气温趋势图数据
+    * 气温趋势图
     * */
     @GetMapping("/trendYear")
     public Result getTrendData() {
