@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { Cloudy, Share, Location, TrendCharts, Histogram, Warning, Cpu } from '@element-plus/icons-vue'
 import { getKpi } from '@/api/statisticApi'
+import Footer from '@/components/footer.vue'
 
 // KPI List Data
 // 1. 将 kpiList 改为 ref
@@ -174,6 +175,7 @@ const funcList = [
       </div>
       <span class="copy bright-accent">HOHHOT CLIMATE INTELLIGENCE © 2026</span>
     </footer>
+
   </div>
 </template>
 

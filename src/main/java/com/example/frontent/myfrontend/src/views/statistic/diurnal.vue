@@ -4,7 +4,7 @@
 
 <template>
     <div>
-        <h1>diurnal temperature statistics</h1>
+        <h1>日差温度统计分析</h1>
     </div>
 </template>
 

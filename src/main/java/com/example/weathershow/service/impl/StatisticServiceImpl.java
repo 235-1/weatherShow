@@ -1,12 +1,10 @@
 package com.example.weathershow.service.impl;
 
+import com.example.weathershow.mapper.WeatherExtremeMapper;
 import com.example.weathershow.mapper.WeatherKpiMetricsMapper;
 import com.example.weathershow.mapper.WeatherTrendMonthMapper;
 import com.example.weathershow.mapper.WeatherTrendYearMapper;
-import com.example.weathershow.pojo.TrendVo;
-import com.example.weathershow.pojo.WeatherKpiMetrics;
-import com.example.weathershow.pojo.WeatherTrendMonth;
-import com.example.weathershow.pojo.WeatherTrendYear;
+import com.example.weathershow.pojo.*;
 import com.example.weathershow.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,9 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Autowired
     private WeatherTrendMonthMapper weatherTrendMonthMapper;
+
+    @Autowired
+    private WeatherExtremeMapper weatherExtremeMapper;
 
     @Override
     public WeatherKpiMetrics getKpiData() {
@@ -59,6 +60,138 @@ public class StatisticServiceImpl implements StatisticService {
                 .maxSeries(list.stream().map(WeatherTrendMonth::getMaxTemp).collect(Collectors.toList()))
                 .minSeries(list.stream().map(WeatherTrendMonth::getMinTemp).collect(Collectors.toList()))
                 .rangeSeries(list.stream().map(WeatherTrendMonth::getAvgDailyRange).collect(Collectors.toList()))
+                .build();
+    }
+
+    @Override
+    public ExtremeVo getExtremeData() {
+        // 查询所有极端天气数据
+        List<WeatherExtreme> list = weatherExtremeMapper.queryAllGroupByYearAndType();
+
+        // 1. 获取唯一的年份列表
+        List<Object> years = list.stream()
+                .map(WeatherExtreme::getYear)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+
+        // 使用 Map<Integer, Integer> 代替 var
+        java.util.Map<Integer, Integer> highMap = list.stream()
+                .filter(i -> "EXTREME_HIGH".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(WeatherExtreme::getYear, WeatherExtreme::getTotalCount));
+
+        java.util.Map<Integer, Integer> lowMap = list.stream()
+                .filter(i -> "EXTREME_LOW".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(WeatherExtreme::getYear, WeatherExtreme::getTotalCount));
+        // 3. 构建 VO
+        return ExtremeVo.builder()
+                .xAxis(years)
+                .highSeries(years.stream().map(y -> highMap.getOrDefault(y, 0)).collect(Collectors.toList()))
+                .lowSeries(years.stream().map(y -> -lowMap.getOrDefault(y, 0)).collect(Collectors.toList())) // 负号处理
+                .build();
+    }
+
+    @Override
+    public List<SeasonExtremeVo> getExtremeBySeason() {
+        List<SeasonExtremeVo> seasonExtremeVos = weatherExtremeMapper.getExtremeBySeason();
+        return seasonExtremeVos;
+    }
+
+    // 极端天气月份热力图
+    @Override
+    public List<WeatherExtreme> getExtremeByMonth() {
+        List<WeatherExtreme> extremeByMonth = weatherExtremeMapper.getExtremeByMonth();
+        return extremeByMonth;
+    }
+
+    @Override
+    public YearlyIntensityVo getYearlyIntensity() {
+        List<WeatherExtreme> list = weatherExtremeMapper.getYearlyAvgIntensity();
+
+        List<Object> years = list.stream()
+                .map(WeatherExtreme::getYear)
+                .distinct().sorted()
+                .collect(Collectors.toList());
+
+        java.util.Map<Integer, Double> highMap = list.stream()
+                .filter(i -> "EXTREME_HIGH".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(WeatherExtreme::getYear, WeatherExtreme::getAvgIntensity));
+
+        java.util.Map<Integer, Double> lowMap = list.stream()
+                .filter(i -> "EXTREME_LOW".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(WeatherExtreme::getYear, WeatherExtreme::getAvgIntensity));
+
+        return YearlyIntensityVo.builder()
+                .xAxis(years)
+                .highSeries(years.stream()
+                        .map(y -> highMap.getOrDefault((Integer) y, 0.0))
+                        .collect(Collectors.toList()))
+                .lowSeries(years.stream()
+                        .map(y -> lowMap.getOrDefault((Integer) y, 0.0))
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    @Override
+    public ExtremeVo getYearlyTrend() {
+        List<WeatherExtreme> list = weatherExtremeMapper.getYearlyCountByType();
+
+        List<Object> years = list.stream()
+                .map(WeatherExtreme::getYear)
+                .distinct().sorted()
+                .collect(Collectors.toList());
+
+        java.util.Map<Integer, Integer> highMap = list.stream()
+                .filter(i -> "EXTREME_HIGH".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(WeatherExtreme::getYear, WeatherExtreme::getTotalCount));
+
+        java.util.Map<Integer, Integer> lowMap = list.stream()
+                .filter(i -> "EXTREME_LOW".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(WeatherExtreme::getYear, WeatherExtreme::getTotalCount));
+
+        return ExtremeVo.builder()
+                .xAxis(years)
+                .highSeries(years.stream()
+                        .map(y -> highMap.getOrDefault((Integer) y, 0))
+                        .collect(Collectors.toList()))
+                .lowSeries(years.stream()
+                        .map(y -> lowMap.getOrDefault((Integer) y, 0))
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    @Override
+    public YearlyIntensityVo getMonthlyIntensity() {
+        List<WeatherExtreme> list = weatherExtremeMapper.getMonthlyAvgIntensity();
+
+        // xaxis 拼成 "2018-01" 格式，保持有序去重
+        List<Object> months = list.stream()
+                .map(i -> (Object) String.format("%d-%02d", i.getYear(), i.getMonth()))
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        java.util.Map<String, Double> highMap = list.stream()
+                .filter(i -> "EXTREME_HIGH".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(
+                        i -> String.format("%d-%02d", i.getYear(), i.getMonth()),
+                        WeatherExtreme::getAvgIntensity));
+
+        java.util.Map<String, Double> lowMap = list.stream()
+                .filter(i -> "EXTREME_LOW".equals(i.getExtremeType()))
+                .collect(Collectors.toMap(
+                        i -> String.format("%d-%02d", i.getYear(), i.getMonth()),
+                        WeatherExtreme::getAvgIntensity));
+
+        return YearlyIntensityVo.builder()
+                .xAxis(months)
+                .highSeries(months.stream()
+                        .map(m -> highMap.getOrDefault((String) m, 0.0))
+                        .collect(Collectors.toList()))
+                .lowSeries(months.stream()
+                        .map(m -> lowMap.getOrDefault((String) m, 0.0))
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

@@ -18,17 +18,19 @@ const initChart = () => {
     const option = {
       title: {
         text: "20年气温演变热力矩阵",
-        subtext: "解读：颜色越红气温越高 | 红色块垂直扩展说明夏季变长 | 整体右移说明长期变暖",
+        subtext:
+          "解读：颜色越红气温越高 | 红色块垂直扩展说明夏季变长 | 整体右移说明长期变暖",
         left: "center",
         textStyle: { color: "#fff", fontSize: 16 },
-        subtextStyle: { color: "#8a99ad", fontSize: 12 }
+        subtextStyle: { color: "#8a99ad", fontSize: 12 },
       },
       tooltip: {
         position: "top",
-        formatter: (p) => `${p.data[0] + 2004}年 ${p.data[1] + 1}月: ${p.data[2]}°C`,
+        formatter: (p) =>
+          `${p.data[0] + 2004}年 ${p.data[1] + 1}月: ${p.data[2]}°C`,
       },
       grid: {
-        top: "100px", // 【优化】原来是80px，改大一点防止遮挡副标题
+        top: "100px",
         left: "5%",
         right: "5%",
         bottom: "100px",
@@ -37,7 +39,20 @@ const initChart = () => {
       xAxis: { type: "category", axisLabel: { color: "#8a99ad", rotate: 45 } },
       yAxis: {
         type: "category",
-        data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+        data: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月",
+        ],
         axisLabel: { color: "#8a99ad" },
       },
       visualMap: {
@@ -47,20 +62,19 @@ const initChart = () => {
         orient: "horizontal",
         left: "center",
         bottom: "10px",
-        // 【核心修改点】：增加颜色断点，使用高对比度的气象色带
-        inRange: { 
+        inRange: {
           color: [
-            '#313695', // 极寒 深蓝
-            '#4575b4', 
-            '#74add1', // 偏冷 浅蓝
-            '#e0f3f8', // 凉爽 极浅蓝
-            '#ffffbf', // 适宜 淡黄 (作为中间过渡色，取代纯白)
-            '#fee090', 
-            '#fdae61', // 温暖 橙色
-            '#f46d43', 
-            '#d73027', // 炎热 红色
-            '#a50026'  // 酷热 暗红
-          ] 
+            "#313695", // 极寒 深蓝
+            "#4575b4",
+            "#74add1", // 偏冷 浅蓝
+            "#e0f3f8", // 凉爽 极浅蓝
+            "#ffffbf", // 适宜 淡黄 (作为中间过渡色，取代纯白)
+            "#fee090",
+            "#fdae61", // 温暖 橙色
+            "#f46d43",
+            "#d73027", // 炎热 红色
+            "#a50026", // 酷热 暗红
+          ],
         },
       },
       series: [
@@ -89,7 +103,13 @@ onMounted(() => {
   window.addEventListener("resize", () => myChart?.resize());
 });
 
-watch(() => props.heatmapData, (newData) => { if (newData) updateChart(newData); }, { deep: true });
+watch(
+  () => props.heatmapData,
+  (newData) => {
+    if (newData) updateChart(newData);
+  },
+  { deep: true },
+);
 </script>
 
 <style scoped>

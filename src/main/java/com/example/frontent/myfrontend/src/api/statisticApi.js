@@ -17,3 +17,27 @@ export const getTrendMonth = async () => {
     const res = await request.get('/trendMonth')
     return res.data
 }
+
+// 极端天气
+export const getExtremeWeather = async () => {
+    const res = await request.get('/extreme')
+    return res.data
+}
+
+// 季节极端天气的玫瑰图
+export const getSeasonalExtremeWeather = async () => {
+    const res = await request.get('/extremeSeason')
+    return res.data
+}
+
+// 年偏差面积组合图
+export const getYearlyDeviation = async () => {
+    const res = await request.get('/extremeIntensity')
+    return res.data
+}
+
+// 月偏差面积组合图
+export const getMonthlyDeviation = async () => {
+    const res = await request.get('/monthlyIntensity')
+    return res.data
+}

@@ -1,14 +1,12 @@
 package com.example.weathershow.controller;
 
 
-import com.example.weathershow.pojo.Result;
-import com.example.weathershow.pojo.TrendVo;
-import com.example.weathershow.pojo.WeatherKpiMetrics;
+import com.example.weathershow.pojo.*;
 import com.example.weathershow.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 /**
  * @author X
  * @date 2026/6/9 18:06
@@ -46,4 +44,48 @@ public class StatisticController {
         TrendVo trendVo = statisticService.getTrendMonthData();
         return Result.success(trendVo);
     }
+
+    // 极端天气 各年份各类型的极端天气总数
+    @GetMapping("/extreme")
+    public Result getExtremeData() {
+        ExtremeVo extremeVo = statisticService.getExtremeData();
+        return Result.success(extremeVo);
+    }
+
+    //极端天气季节性分布图
+    @GetMapping("/extremeSeason")
+    public Result getExtremeSeasonData() {
+        List<SeasonExtremeVo> extremeSeasonData = statisticService.getExtremeBySeason();
+        return Result.success(extremeSeasonData);
+
+    }
+
+    // 极端天气月份热力图
+    @GetMapping("/extremeMonth")
+    public Result getExtremeMonthData() {
+        List<WeatherExtreme> extremeMonthData = statisticService.getExtremeByMonth();
+        return Result.success(extremeMonthData);
+    }
+
+    // 年度偏差强度趋势
+    @GetMapping("/extremeIntensity")
+    public Result getExtremeIntensity() {
+        return Result.success(statisticService.getYearlyIntensity());
+    }
+    // 月度偏差  按月聚合统计
+    // 月度偏差强度趋势
+    @GetMapping("/monthlyIntensity")
+    public Result getMonthlyIntensity() {
+        return Result.success(statisticService.getMonthlyIntensity());
+    }
+    // 日偏差 按日聚合统计
+
+    // 高温/低温天数年度对比趋势 重复
+    @GetMapping("/extremeTrend")
+    public Result getExtremeTrend() {
+        return Result.success(statisticService.getYearlyTrend());
+    }
+
+
 }
+

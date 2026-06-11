@@ -29,11 +29,11 @@
     </nav>
 
     <main class="stat-content">
-      <router-view v-slot="{ Component }">
-        <transition name="fade-slide" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <router-view v-slot="{ Component, route }">
+  <transition name="fade-slide" mode="out-in">
+    <component :is="Component" :key="route.fullPath" />
+  </transition>
+</router-view>
     </main>
   </div>
 </template>

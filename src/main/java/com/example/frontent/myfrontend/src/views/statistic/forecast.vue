@@ -4,7 +4,7 @@
 
 <template>
     <div>
-        <h1>forecast temperature statistics</h1>
+        <h1>预报温度统计分析</h1>
     </div>
 </template>
 
