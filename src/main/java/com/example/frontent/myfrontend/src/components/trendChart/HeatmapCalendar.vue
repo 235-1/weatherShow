@@ -1,5 +1,10 @@
 <template>
-  <div ref="chartRef" class="chart-container"></div>
+  <div class="chart-wrapper">
+    <div v-if="loading" class="chart-loading">
+      <span class="spinner"></span>
+    </div>
+    <div ref="chartRef" class="chart-container"></div>
+  </div>
 </template>
 
 <script setup>
@@ -8,6 +13,7 @@ import * as echarts from "echarts";
 
 const props = defineProps({ heatmapData: Object });
 const chartRef = ref(null);
+const loading = ref(true);
 let myChart = null;
 
 const initChart = () => {
@@ -87,6 +93,7 @@ const initChart = () => {
     };
     myChart.setOption(option);
     if (props.heatmapData) updateChart(props.heatmapData);
+    else loading.value = false;
   });
 };
 
@@ -96,6 +103,7 @@ const updateChart = (data) => {
     xAxis: { data: data.years },
     series: [{ data: data.matrixData }],
   });
+  loading.value = false;
 };
 
 onMounted(() => {
@@ -113,6 +121,32 @@ watch(
 </script>
 
 <style scoped>
+.chart-wrapper {
+  position: relative;
+}
+.chart-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 24, 48, 0.6);
+  border-radius: 8px;
+  z-index: 10;
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .chart-container {
   width: 100%;
   height: 550px;

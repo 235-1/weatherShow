@@ -14,3 +14,10 @@ body,
   background-color: #060d1a; /* 你的气象平台背景色 */
   overflow: hidden;         /* 防止超出屏幕的滚动条 */
 }
+
+.custom-loading .el-loading-spinner .el-loading-text {
+  color: #3a8fff;
+}
+.custom-loading .el-loading-spinner .path {
+  stroke: #3a8fff;
+}

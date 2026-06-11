@@ -12,10 +12,10 @@ const request = axios.create({
 request.interceptors.request.use(function (config) {
   // 请求发出前，开启加载动画
   loadingInstance = ElLoading.service({
-    lock: true,
-    text: '数据加载中...',
-    background: 'rgba(0, 0, 0, 0.7)',
-  });
+      lock: true,
+      text: '数据加载中...',
+      background: 'rgba(6, 13, 26, 0.85)',
+    });
   return config;
 }, function (error) {
   return Promise.reject(error);

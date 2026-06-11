@@ -35,4 +35,15 @@ public interface StatisticService {
     // 月度偏差
     YearlyIntensityVo getMonthlyIntensity();
 
+    // 日较差 按年聚合
+    List<DistributionRangeVo> getDayDistribution();
+
+    // 日较差和平均气温相关性
+    List<DistributionCorrelationVo> getDayDistributionByMonth();
+
+    // 日较差 按月聚合
+    List<DistributionMonthlyVo> getDiurnalMonthly();
+
+    // 日较差 季节
+    List<DistributionSeason> getDiurnalSeason();
 }

@@ -1,9 +1,14 @@
 <template>
-  <div
-    class="chart-container"
-    ref="chartRef"
-    style="width: 100%; height: 400px"
-  ></div>
+  <div class="chart-wrapper">
+    <div v-if="loading" class="chart-loading">
+      <span class="spinner"></span>
+    </div>
+    <div
+      class="chart-container"
+      ref="chartRef"
+      style="width: 100%; height: 400px"
+    ></div>
+  </div>
 </template>
 
 <script setup>
@@ -12,12 +17,15 @@ import * as echarts from "echarts";
 
 const props = defineProps({ data: Object });
 const chartRef = ref(null);
+const loading = ref(true);
 let chart = null;
 
 const initChart = async (data) => {
   // 等待 DOM 渲染完成
   await nextTick();
   if (!chartRef.value) return;
+
+  loading.value = true;
 
   // 如果已初始化，先销毁旧实例防止重叠
   if (chart) chart.dispose();
@@ -73,6 +81,7 @@ const initChart = async (data) => {
     ],
   };
   chart.setOption(option);
+  loading.value = false;
 };
 
 // 监听数据，添加 immediate: true
@@ -86,6 +95,32 @@ watch(
 </script>
 
 <style scoped>
+.chart-wrapper {
+  position: relative;
+}
+.chart-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 24, 48, 0.6);
+  border-radius: 8px;
+  z-index: 10;
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .chart-container {
   width: 100%;
   height: 350px; /* 统一高度 */

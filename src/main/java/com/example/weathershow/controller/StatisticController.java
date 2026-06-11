@@ -86,6 +86,29 @@ public class StatisticController {
         return Result.success(statisticService.getYearlyTrend());
     }
 
+    //日较差分布 最低温和最高温的差
+    @GetMapping("/dayDistribution")
+    public Result getDayDistribution() {
+        return Result.success(statisticService.getDayDistribution());
+    }
+
+    // 日较差与平均气温相关性 做散点图
+    @GetMapping("/dayDistributionByMonth")
+    public Result getDayDistributionByMonth() {
+        return Result.success(statisticService.getDayDistributionByMonth());
+    }
+
+    // 月度日较差统计折线图
+    @GetMapping("/monthDistribution")
+    public Result getMonthDistribution() {
+        return Result.success(statisticService.getDiurnalMonthly());
+    }
+
+    // 季节日较差箱线图
+    @GetMapping("/diurnalSeason")
+    public Result getDiurnalSeason() {
+        return Result.success(statisticService.getDiurnalSeason());
+    }
 
 }
 

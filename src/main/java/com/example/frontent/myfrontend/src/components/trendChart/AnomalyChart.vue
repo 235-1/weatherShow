@@ -5,6 +5,9 @@
 -->
 <template>
   <div class="chart-wrapper">
+    <div v-if="loading" class="chart-loading">
+      <span class="spinner"></span>
+    </div>
     <div ref="chartRef" class="chart-container"></div>
     <div class="analysis-panel">
       <div class="analysis-title">数据解读：</div>
@@ -27,10 +30,13 @@ import * as echarts from "echarts";
 
 const props = defineProps({ trendYear: Object });
 const chartRef = ref(null);
+const loading = ref(true);
 let myChart = null;
 
 const updateChart = (data) => {
-  if (!myChart || !data || !data.avgSeries) return;
+  if (!myChart || !data || !data.avgSeries) {
+    return;
+  }
 
   const avgArray = data.avgSeries;
   const globalAvg = avgArray.reduce((a, b) => a + b, 0) / avgArray.length;
@@ -94,6 +100,7 @@ const updateChart = (data) => {
       },
     ],
   });
+  loading.value = false;
 };
 
 onMounted(() => {
@@ -112,6 +119,32 @@ watch(
 </script>
 
 <style scoped>
+.chart-wrapper {
+  position: relative;
+}
+.chart-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 24, 48, 0.6);
+  border-radius: 8px;
+  z-index: 10;
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .chart-container {
   width: 100%;
   height: 350px; /* 统一高度 */

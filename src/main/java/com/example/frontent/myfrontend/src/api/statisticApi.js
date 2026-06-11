@@ -41,3 +41,9 @@ export const getMonthlyDeviation = async () => {
     const res = await request.get('/monthlyIntensity')
     return res.data
 }
+
+// 日差温度统计分析
+export const getDiurnalDeviation = async () => {
+    const res = await request.get('/dayDistribution')
+    return res.data
+}

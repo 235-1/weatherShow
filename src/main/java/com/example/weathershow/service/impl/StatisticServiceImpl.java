@@ -1,14 +1,12 @@
 package com.example.weathershow.service.impl;
 
-import com.example.weathershow.mapper.WeatherExtremeMapper;
-import com.example.weathershow.mapper.WeatherKpiMetricsMapper;
-import com.example.weathershow.mapper.WeatherTrendMonthMapper;
-import com.example.weathershow.mapper.WeatherTrendYearMapper;
+import com.example.weathershow.mapper.*;
 import com.example.weathershow.pojo.*;
 import com.example.weathershow.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +27,12 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Autowired
     private WeatherExtremeMapper weatherExtremeMapper;
+
+    @Autowired
+    private WeatherRangeDistributionMapper weatherRangeDistributionMapper;
+
+    @Autowired
+    private WeatherDwdMapper weatherDwdMapper;
 
     @Override
     public WeatherKpiMetrics getKpiData() {
@@ -193,5 +197,48 @@ public class StatisticServiceImpl implements StatisticService {
                         .map(m -> lowMap.getOrDefault((String) m, 0.0))
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    @Override
+    public List<DistributionRangeVo> getDayDistribution() {
+        List<WeatherRangeDistribution> list = weatherRangeDistributionMapper.findAll();
+
+        return list.stream()
+                .collect(Collectors.groupingBy(WeatherRangeDistribution::getYear))
+                .entrySet().stream()
+                .map(entry -> {
+                    // 使用 Builder 模式构建对象，代码更加直观
+                    DistributionRangeVo.DistributionRangeVoBuilder builder = DistributionRangeVo.builder()
+                            .year(entry.getKey())
+                            .range0to5(0L).range5to10(0L).range10to15(0L).rangeOver15(0L); // 默认初始化
+
+                    // 填充数据
+                    entry.getValue().forEach(item -> {
+                        switch (item.getRangeBucket()) {
+                            case "0-5℃": builder.range0to5(item.getCnt()); break;
+                            case "5-10℃": builder.range5to10(item.getCnt()); break;
+                            case "10-15℃": builder.range10to15(item.getCnt()); break;
+                            case ">15℃": builder.rangeOver15(item.getCnt()); break;
+                        }
+                    });
+                    return builder.build();
+                })
+                .sorted(Comparator.comparing(DistributionRangeVo::getYear))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DistributionCorrelationVo> getDayDistributionByMonth() {
+        return weatherDwdMapper.getDiurnalCorrelation();
+    }
+
+    @Override
+    public List<DistributionMonthlyVo> getDiurnalMonthly() {
+        return weatherDwdMapper.getDiurnalMonthly();
+    }
+
+    @Override
+    public List<DistributionSeason> getDiurnalSeason() {
+        return weatherDwdMapper.getDiurnalSeason();
     }
 }
