@@ -47,3 +47,21 @@ export const getDiurnalDeviation = async () => {
     const res = await request.get('/dayDistribution')
     return res.data
 }
+
+// 日差季节分布箱线图
+export const getSeasonalDeviation = async () => {
+    const res = await request.get('/diurnalSeason')
+    return res.data
+}
+
+// 日差与平均气温散点图
+export const getScatterChart = async () => {
+    const res = await request.get('/dayDistributionByMonth')
+    return res.data
+}
+
+// 月度平均日较差（折线图用）
+export const getMonthlyDeviationLine = async () => {
+    const res = await request.get('/monthDistribution')
+    return res.data
+}

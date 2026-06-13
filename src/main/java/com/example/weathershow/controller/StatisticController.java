@@ -109,6 +109,4 @@ public class StatisticController {
     public Result getDiurnalSeason() {
         return Result.success(statisticService.getDiurnalSeason());
     }
-
 }
-
