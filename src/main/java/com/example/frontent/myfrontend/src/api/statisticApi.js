@@ -65,3 +65,15 @@ export const getMonthlyDeviationLine = async () => {
     const res = await request.get('/monthDistribution')
     return res.data
 }
+
+// 预测数据
+export const getPrediction = async () => {
+    const res = await request.get('/forecast')
+    return res.data
+}
+
+// 真实数据2024
+export const getActualData = async () => {
+    const res = await request.get('/actualData')
+    return res.data
+}

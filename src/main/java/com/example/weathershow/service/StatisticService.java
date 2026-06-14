@@ -1,6 +1,7 @@
 package com.example.weathershow.service;
 
 import com.example.weathershow.pojo.*;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Service;
 import java.util.List;
 /**
@@ -49,4 +50,6 @@ public interface StatisticService {
 
     // 预测表
     List<WeatherForecast> getForecast();
+
+    List<WeatherData> getActualData();
 }

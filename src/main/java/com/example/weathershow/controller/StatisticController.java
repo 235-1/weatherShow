@@ -116,4 +116,10 @@ public class StatisticController {
         return Result.success(statisticService.getForecast());
     }
 
+    // 2024年的实际数据
+    @GetMapping("/actualData")
+    public Result getActualData() {
+        return Result.success(statisticService.getActualData());
+    }
+
 }

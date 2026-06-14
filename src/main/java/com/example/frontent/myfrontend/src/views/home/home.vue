@@ -62,7 +62,7 @@ const funcList = [
   { name: '气温趋势分析', desc: '年 / 季 / 月三维度 · 20年变化规律', route: '/statistic/trend',    icon: TrendCharts, tag: 'TREND', color: '#3a8fff', borderColor: '#1a4a8a' },
   { name: '极端气温统计', desc: '高温 / 低温频次 · 科学阈值界定',    route: '/statistic/extreme',  icon: Warning,     tag: 'ALERT', color: '#ff7b45', borderColor: '#4a2010' },
   { name: '日较差分布',   desc: '大陆性气候特征 · 季节差异分析',     route: '/statistic/diurnal',  icon: Histogram,   tag: 'DIST',  color: '#c07fff', borderColor: '#3a1050' },
-  { name: '预测建模',     desc: '时序回归模型 · 未来气温研判',       route: '/statistic/forecast', icon: Cpu,         tag: 'AI',    color: '#00f58a', borderColor: '#004020' },
+  { name: '预测建模',     desc: '时序回归模型 · 未来气温研判',       route: '/statistic/forecast', icon: Cpu,            color: '#00f58a', borderColor: '#004020' },
 ]
 </script>
 

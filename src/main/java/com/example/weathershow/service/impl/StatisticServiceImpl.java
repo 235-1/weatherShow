@@ -37,6 +37,9 @@ public class StatisticServiceImpl implements StatisticService {
     @Autowired
     private WeatherForecastMapper weatherForecastMapper;
 
+    @Autowired
+    private WeatherDataMapper weatherDataMapper;
+
     @Override
     public WeatherKpiMetrics getKpiData() {
         WeatherKpiMetrics weatherKpiMetrics = weatherKpiMetricsMapper.queryAll();
@@ -248,5 +251,10 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public List<WeatherForecast> getForecast() {
         return weatherForecastMapper.queryAll();
+    }
+
+    @Override
+    public List<WeatherData> getActualData() {
+        return weatherDataMapper.queryAll();
     }
 }

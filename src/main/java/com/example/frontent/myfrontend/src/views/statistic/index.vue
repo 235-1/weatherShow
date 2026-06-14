@@ -17,7 +17,7 @@
           <el-icon><Histogram /></el-icon> 日较差分布
         </router-link>
         <router-link to="/statistic/forecast" class="nav-item">
-          <el-icon><Cpu /></el-icon> AI 预测建模
+          <el-icon><Cpu /></el-icon> 预测建模
         </router-link>
       </div>
 
