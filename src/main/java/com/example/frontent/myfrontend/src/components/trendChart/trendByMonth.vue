@@ -56,7 +56,24 @@ const initChart = () => {
       bottom: "100px",
       containLabel: true,
     },
-    xAxis: { type: "category", data: [], axisLabel: { color: "#fff" } },
+    // 修改 initChart 中的 xAxis 部分
+xAxis: {
+  type: "category",
+  data: [],
+  axisLabel: { color: "#fff" },
+  // 添加以下 splitLine 配置
+  splitLine: {
+    show: true,
+    interval: (index, value) => {
+      // 假设数据格式是 'yyyy-MM'，当月份为 '01' 时显示竖线
+      return value.endsWith("-01");
+    },
+    lineStyle: {
+      type: "dashed", // 虚线
+      color: "pink", // 稍微透明的白色，不干扰数据线
+    },
+  },
+},
     yAxis: {
       type: "value",
       name: "温度 (°C)",

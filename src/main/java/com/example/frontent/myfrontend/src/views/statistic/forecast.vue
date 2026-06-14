@@ -22,22 +22,81 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="chart-container">
-    <linearChart 
-      v-if="forecastData.length > 0 && actualData.length > 0" 
-      :data="forecastData"
-      :actualData="actualData"
-    />
+  <div class="dashboard-wrapper">
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="label">MAE (平均绝对误差)</div>
+        <div class="value">3.18 <small>℃</small></div>
+      </div>
+      <div class="metric-card">
+        <div class="label">RMSE (均方根误差)</div>
+        <div class="value">4.03 <small>℃</small></div>
+      </div>
+      <div class="metric-card">
+        <div class="label">置信区间覆盖率</div>
+        <div class="value">92.61 <small>%</small></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <linearChart 
+        v-if="forecastData.length > 0 && actualData.length > 0" 
+        :data="forecastData"
+        :actualData="actualData"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
-.chart-container {
-  display: flex;             
-  flex-direction: column;
-  justify-content: center;  
-  align-items: center;       
-  width: 100%;               
-  padding: 40px 0px;         
+.dashboard-wrapper {
+  padding: 20px;
+  background-color: #0f172a; /* 背景色调为深蓝黑 */
+  border-radius: 12px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.metric-card {
+  background: rgba(30, 41, 59, 0.7); /* 玻璃拟态深色背景 */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.metric-card:hover {
+  background: rgba(51, 65, 85, 0.9);
+}
+
+.label {
+  font-size: 13px;
+  color: #94a3b8; /* 冷灰色调 */
+  margin-bottom: 10px;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f8fafc; /* 高亮白色 */
+}
+
+.value small {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.chart-card {
+  background: #1e293b; /* 和卡片呼应的深色背景 */
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 </style>
