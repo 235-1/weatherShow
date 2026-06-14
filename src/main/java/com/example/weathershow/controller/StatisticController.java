@@ -109,4 +109,11 @@ public class StatisticController {
     public Result getDiurnalSeason() {
         return Result.success(statisticService.getDiurnalSeason());
     }
+
+    // 预测表
+    @GetMapping("/forecast")
+    public Result getForecast() {
+        return Result.success(statisticService.getForecast());
+    }
+
 }

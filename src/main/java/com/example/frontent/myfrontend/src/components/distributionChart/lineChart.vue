@@ -55,14 +55,14 @@ const initChart = () => {
     },
     legend: {
       data: ["平均日较差", "波动范围(最小~最大)"],
-      right: "24px",
+      right: "104px",
       top: "24px",
       textStyle: { color: "#94a3b8", fontSize: 13 },
       selectedMode: false,
     },
     grid: {
       left: "40px",
-      right: "40px",
+      right: "100px",
       bottom: "60px",
       top: "120px",
       containLabel: true,

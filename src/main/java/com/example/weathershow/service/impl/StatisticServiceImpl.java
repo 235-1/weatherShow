@@ -34,6 +34,9 @@ public class StatisticServiceImpl implements StatisticService {
     @Autowired
     private WeatherDwdMapper weatherDwdMapper;
 
+    @Autowired
+    private WeatherForecastMapper weatherForecastMapper;
+
     @Override
     public WeatherKpiMetrics getKpiData() {
         WeatherKpiMetrics weatherKpiMetrics = weatherKpiMetricsMapper.queryAll();
@@ -240,5 +243,10 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public List<DistributionSeason> getDiurnalSeason() {
         return weatherDwdMapper.getDiurnalSeason();
+    }
+
+    @Override
+    public List<WeatherForecast> getForecast() {
+        return weatherForecastMapper.queryAll();
     }
 }

@@ -46,4 +46,7 @@ public interface StatisticService {
 
     // 日较差 季节
     List<DistributionSeason> getDiurnalSeason();
+
+    // 预测表
+    List<WeatherForecast> getForecast();
 }
