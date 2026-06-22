@@ -27,7 +27,6 @@ request.interceptors.response.use(function (response) {
   if (loadingInstance) loadingInstance.close();
   return response;
 }, function (error) {
-  // 发生错误时也要关闭动画，否则会一直转圈
   if (loadingInstance) loadingInstance.close();
   return Promise.reject(error);
 });

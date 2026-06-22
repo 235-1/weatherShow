@@ -61,7 +61,7 @@ const initChart = () => {
     ],
     grid: {
       top: "60px",
-      bottom: "80px", // 稍微增加底部距离，为 dataZoom 滑动条留出空间
+      bottom: "80px", // 增加底部距离
       left: "60px",
       right: "40px",
       containLabel: true,

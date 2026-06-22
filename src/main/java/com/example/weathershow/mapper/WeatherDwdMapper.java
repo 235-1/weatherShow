@@ -14,7 +14,6 @@ public interface WeatherDwdMapper {
     List<DistributionCorrelationVo> getDiurnalCorrelation();
     //月度日较差统计折线图
     List<DistributionMonthlyVo> getDiurnalMonthly();
-
     // 日较差季节
     List<DistributionSeason> getDiurnalSeason();
 

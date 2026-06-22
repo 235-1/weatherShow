@@ -90,7 +90,7 @@ const updateChart = (data) => {
   loading.value = false;
 };
 
-// 2. 修正：监听 trendYear 而不是 chartData
+// 监听 trendYear 而不是 chartData
 watch(
   () => props.trendYear,
   (newData) => {
@@ -103,7 +103,7 @@ const handleResize = () => myChart?.resize();
 
 onMounted(() => {
   initChart();
-  // 3. 修正：初始数据渲染也使用 trendYear
+  // 初始数据渲染也使用 trendYear
   if (props.trendYear) updateChart(props.trendYear);
   window.addEventListener("resize", handleResize);
 });
@@ -142,8 +142,8 @@ onBeforeUnmount(() => {
   }
 }
 .chart-container {
-  width: 100%; /* 充满父容器 */
-  height: 350px; /* 统一设定高度，避免上下图高度不一致 */
+  width: 100%; 
+  height: 350px; 
   margin-bottom: 20px;
   background: rgba(16, 24, 48, 0.4);
   border: 1px solid #1e293b;

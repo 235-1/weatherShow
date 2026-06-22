@@ -50,17 +50,7 @@ const load = async () => {
 
 onMounted(() => load());
 
-// 把后端 { xaxis, highSeries, lowSeries } 统一转成 areaChart 需要的格式
-// function toChartData(raw) {
-//   if (!raw?.xaxis?.length) return {};
-//   return {
-//     xaxis: raw.xaxis,
-//     series: [
-//       { name: "极端高温偏差", data: raw.highSeries },
-//       { name: "极端低温偏差", data: raw.lowSeries },
-//     ],
-//   };
-// }
+
 </script>
 
 <template>

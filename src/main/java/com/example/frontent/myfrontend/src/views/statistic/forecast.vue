@@ -51,7 +51,7 @@ onMounted(async () => {
 <style scoped>
 .dashboard-wrapper {
   padding: 20px;
-  background-color: #0f172a; /* 背景色调为深蓝黑 */
+  background-color: #0f172a; /*深蓝黑 */
   border-radius: 12px;
 }
 
@@ -63,7 +63,7 @@ onMounted(async () => {
 }
 
 .metric-card {
-  background: rgba(30, 41, 59, 0.7); /* 玻璃拟态深色背景 */
+  background: rgba(30, 41, 59, 0.7); 
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 24px;
@@ -78,14 +78,14 @@ onMounted(async () => {
 
 .label {
   font-size: 13px;
-  color: #94a3b8; /* 冷灰色调 */
+  color: #94a3b8; 
   margin-bottom: 10px;
 }
 
 .value {
   font-size: 28px;
   font-weight: 700;
-  color: #f8fafc; /* 高亮白色 */
+  color: #f8fafc; 
 }
 
 .value small {
@@ -94,7 +94,7 @@ onMounted(async () => {
 }
 
 .chart-card {
-  background: #1e293b; /* 和卡片呼应的深色背景 */
+  background: #1e293b;
   padding: 20px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.05);

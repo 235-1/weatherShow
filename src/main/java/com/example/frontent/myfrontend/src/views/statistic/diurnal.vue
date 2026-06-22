@@ -12,6 +12,7 @@ import {
 import ScatterChart from "@/components/distributionChart/scatterChart.vue";
 import LineChart from "@/components/distributionChart/lineChart.vue";
 
+
 const diurnalData = ref([]);
 const seasonalBoxData = ref([]);
 const scatterData = ref([]);
@@ -47,6 +48,7 @@ onMounted(async () => {
       :data="diurnalData"
       style="flex: 1"
     />
+
     <ScatterChart
       v-if="scatterData.length > 0"
       :data="scatterData"

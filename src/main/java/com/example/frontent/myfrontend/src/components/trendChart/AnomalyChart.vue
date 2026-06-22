@@ -58,7 +58,7 @@ const updateChart = (data) => {
       formatter: (params) =>
         `${params[0].name}年: ${params[0].value > 0 ? "+" : ""}${params[0].value}°C`,
     },
-    // 关键点：添加一个透明的 dataZoom 占位，使绘图高度与下方的月度趋势图完全对齐
+
     dataZoom: [{ type: "slider", show: false }],
     visualMap: {
       show: false,
@@ -67,12 +67,12 @@ const updateChart = (data) => {
         { lte: 0, color: "#1890ff" },
       ],
     },
-    // 关键点：确保 grid 的 top 和 bottom 与你的月度图完全一致
+
     grid: {
       top: "80px",
       left: "5%",
       right: "5%",
-      bottom: "100px", // 这里必须设为 100px，与你月度图的 grid.bottom 一致
+      bottom: "100px", 
       containLabel: true,
     },
     xAxis: {

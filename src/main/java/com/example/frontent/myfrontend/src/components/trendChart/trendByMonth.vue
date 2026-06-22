@@ -70,7 +70,7 @@ xAxis: {
     },
     lineStyle: {
       type: "dashed", // 虚线
-      color: "pink", // 稍微透明的白色，不干扰数据线
+      color: "pink", 
     },
   },
 },
